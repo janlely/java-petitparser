@@ -42,7 +42,7 @@ public abstract class Parser {
    * Primitive method doing the actual parsing.
    *
    * <p>The method is overridden in concrete subclasses to implement the parser
-   * specific logic. The methods takes a parse {@code context} and returns the
+   * specific logic. The method takes a parse {@code context} and returns the
    * resulting context, which is either a
    * {@link org.petitparser.context.Success}
    * or {@link org.petitparser.context.Failure} context.
@@ -224,7 +224,7 @@ public abstract class Parser {
 
   /**
    * Returns a parser that accepts the receiver exactly {@code count} times. The
-   * resulting parser eturns a list of the parse results of the receiver.
+   * resulting parser returns a list of the parse results of the receiver.
    */
   public Parser times(int count) {
     return repeat(count, count);
@@ -529,7 +529,7 @@ public abstract class Parser {
   }
 
   /**
-   * Returns a human readable string identifying this parser.
+   * Returns a human-readable string identifying this parser.
    */
   public String toString() {
     return getClass().getSimpleName();
