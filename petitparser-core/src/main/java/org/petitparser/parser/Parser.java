@@ -436,7 +436,9 @@ public abstract class Parser {
         .map((List<List<List<Object>>> input) -> {
           List<Object> result = new ArrayList<>();
           result.add(input.get(0));
-          input.get(1).forEach(result::addAll);
+          input.get(1).forEach(e -> {
+            result.add(e.get(1));
+          });
           return result;
         });
   }
