@@ -33,6 +33,7 @@ public class ParsersTest {
 
   @Test
   public void testAnd() {
+//    Parser parser = of('a');
     Parser parser = of('a').and();
     assertSuccess(parser, "a", 'a', 0);
     assertFailure(parser, "b", "'a' expected");
