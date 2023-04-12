@@ -5,19 +5,18 @@ import lombok.Data;
 import org.junit.Test;
 import org.petitparser.context.Result;
 import org.petitparser.parser.Parser;
-import org.petitparser.parser.primitive.CharacterParser;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static org.petitparser.parser.primitive.CharacterParser.noneOf;
+import static org.petitparser.parser.primitive.CharacterParser.of;
 
 public class DemoParser {
 
     @Test
     public void testCsv() {
-        Parser filedParser = CharacterParser.noneOf(",").plus().flatten();
-        Parser csvParser = filedParser.separatedBy(CharacterParser.of(','))
+        Parser filedParser = noneOf(",").plus().flatten();
+        Parser csvParser = filedParser.separatedBy1(of(','))
                 .map((List<String> values) -> CsvExample.builder()
                         .name(values.get(0))
                         .age(Integer.parseInt(values.get(1)))
@@ -31,18 +30,18 @@ public class DemoParser {
 
     @Test
     public void testCustom() {
-        Parser filedParser = CharacterParser.noneOf(",;{}").plus().flatten();
-        Parser csvParser = filedParser.separatedBy(CharacterParser.of(','))
+        Parser filedParser = noneOf(",;{}").plus().flatten();
+        Parser csvParser = filedParser.separatedBy1(of(','))
                 .map((List<String> values) -> CsvExample.builder()
                         .name(values.get(0))
                         .age(Integer.parseInt(values.get(1)))
                         .hobby(values.get(2))
                         .build());
 
-        Parser nameParser = CharacterParser.noneOf("{").plus().flatten();
-        Parser customParser = nameParser.seq(CharacterParser.of('{'),
-                        csvParser.separatedBy(CharacterParser.of(';')),
-                        CharacterParser.of('}'))
+        Parser nameParser = noneOf("{").plus().flatten();
+        Parser customParser = nameParser.seq(of('{'),
+                        csvParser.separatedBy1(of(';')),
+                        of('}'))
                 .map((List values) -> CustomExample.builder()
                         .className((String) values.get(0))
                         .people((List<CsvExample>) values.get(2))

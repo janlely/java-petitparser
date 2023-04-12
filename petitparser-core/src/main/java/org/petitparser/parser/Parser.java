@@ -431,7 +431,7 @@ public abstract class Parser {
    * Returns a new parser that parses the receiver one or more times, separated
    * by a {@code separator}.
    */
-  public Parser separatedBy(Parser separator) {
+  public Parser separatedBy1(Parser separator) {
     return new SequenceParser(this, new SequenceParser(separator, this).star())
         .map((List<List<List<Object>>> input) -> {
           List<Object> result = new ArrayList<>();
@@ -441,6 +441,16 @@ public abstract class Parser {
           });
           return result;
         });
+  }
+
+  public Parser separatedBy(Parser separator) {
+    return new SequenceParser(this, new SequenceParser(separator, this).star())
+            .map((List<List<List<Object>>> input) -> {
+              List<Object> result = new ArrayList<>();
+              result.add(input.get(0));
+              input.get(1).forEach(result::addAll);
+              return result;
+            });
   }
 
   /**
